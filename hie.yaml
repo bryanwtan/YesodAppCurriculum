@@ -1,0 +1,13 @@
+cradle:
+  stack:
+    - path: "./library"
+      component: "YesodAppCurriculum:lib"
+
+    - path: "./app/Main.hs"
+      component: "YesodAppCurriculum:exe:YesodAppCurriculum-exe"
+
+    - path: "./app/Paths_YesodAppCurriculum.hs"
+      component: "YesodAppCurriculum:exe:YesodAppCurriculum-exe"
+
+    - path: "./test"
+      component: "YesodAppCurriculum:test:YesodAppCurriculum-test"

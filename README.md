@@ -13,6 +13,12 @@ fourmolu.yaml
 hlint.yaml
 ```
 
+Watch
 ```bash
 stack exec ghcid
+```
+
+Run
+```bash
+stack run
 ```
