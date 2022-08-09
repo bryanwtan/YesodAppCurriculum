@@ -1,0 +1,472 @@
+# HLint configuration file
+# https://github.com/ndmitchell/hlint
+##########################
+
+# This file contains a template configuration file, which is typically
+# placed as .hlint.yaml in the root of your project
+
+
+# Warnings currently triggered by your code
+- ignore: {name: "Reduce duplication"} # Often pretty spurious/reducing duplication makes the code more confusing
+- ignore: {name: "Use fromMaybe"} # Often `fromMaybe` makes the code harder to read
+- ignore: {name: "Replace case with fromMaybe"} # Often `fromMaybe` makes the code harder to read
+- ignore: {name: "Avoid lambda"} # Lambas sometimes help readability. This is a more controversial one.
+- ignore: {name: "Redundant do"} # Triggered when using `do` for a one liner. Often a redundant do is nice for consistency though (e.g. so every test starts the same)
+- ignore: {name: "Eta reduce"} # (Going from e.g. func arg1 = func "x" "y" arg1 to func = "x" "y"). Generally think this is worse for readability, more confusing for beginners and without the argument name less self-documenting. In some cases it's great (e.g. oldDeprecatedName = newFunctionName) but we can still write those by hand.
+- ignore: {name: "Use unwords"} # This function has a terrible name. I'll take intercalate " " any day.
+- ignore: {name: "Use .", within: [Handler.Uploads.CheckImage, Mercury.API.Plaid.Esqueleto]} # hlint wants to reorder some of the esqueleto into a non-compiling form
+- ignore: {name: "Use list comprehension"} # We don't use these anywhere in our codebase. I don't think it's worth the very minor character savings to have one more construct for beginners to learn.
+- ignore: {name: "Use ||"} # using or [a, b, c] is sometimes nicer than a || b || c when a, b, and c are long expressions
+- ignore: {name: "Move brackets to avoid $"} # https://mercurytechnologies.slack.com/archives/CPE2X5DMJ/p1586975051135300
+- ignore: {name: "Redundant ^."} # often useful for readability
+- ignore: {name: "Redundant multi-way if"} # often useful for readability/extensibility
+- ignore: {name: "Replace case with maybe"} # Can hurt readability
+- ignore: {name: "Fuse on/on"} # Most likely to appear when using Database.Esqueleto, and if the change is accepted the code will not type check
+- ignore: {name: "Use if"} # Case works fine; no need to use a special language construct. Case lets you flip the order too. https://mercurytechnologies.slack.com/archives/C01SYDMAWA0/p1626714592371900
+- ignore: {name: "Use elem", within: [Mercury.AutoDecision.Account]} # We use any/all as rules construct
+- ignore: {name: "Use notElem", within: [Mercury.AutoDecision.Account]} # We use any/all as rules construct
+- ignore: {name: "Use newtype instead of data"}  # Sum types often change their constructor count and record types often change their field count, and this is just annoying in such cases. The difference in strictness is basically negligible for us anyway.
+- ignore: {name: "Use record patterns", within: [Foundation.Authorization]}  # Record patterns obscure things within the context of route definitions
+- ignore: {name: "Use unless", within: [Handler.Onboarding.Berbix]}  # `unless` can lead to double negatives that require too much cognitive effort
+- ignore: {name: "Use tuple-section"}  # TupleSections is usually a readability decrease vs an explicit lambda
+# Specify additional command line arguments
+#
+- arguments: [-XQuasiQuotes, -XTypeApplications, -XNumericUnderscores]
+
+- extensions:
+  - default: true
+  - {name: BlockArguments, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: DataKinds, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: DefaultSignatures, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: DeriveFunctor, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: DeriveGeneric, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: DeriveLift, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: DerivingStrategies, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: FlexibleContexts, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: FlexibleInstances, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: GADTs, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: GeneralizedNewtypeDeriving, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: ImportQualifiedPost, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: InstanceSigs, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: LambdaCase, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: MultiParamTypeClasses, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: MultiWayIf, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: NamedFieldPuns, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: NegativeLiterals, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: NoImplicitPrelude, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: NumericUnderscores, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: OverloadedLabels, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: OverloadedStrings, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: PartialTypeSignatures, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: PatternSynonyms, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: RankNTypes, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: RecordWildCards, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: ScopedTypeVariables, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: StandaloneDeriving, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: TypeApplications, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: TypeFamilies, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: UndecidableInstances, within: [], message: "Do not explicitly enable default extensions"}
+  - {name: ViewPatterns, within: [], message: "Do not explicitly enable default extensions"}
+
+# Control which extensions/flags/modules/functions can be used
+#
+# - extensions:
+#   - default: false # all extension are banned by default
+#   - name: [PatternGuards, ViewPatterns] # only these listed extensions can be used
+#   - {name: CPP, within: CrossPlatform} # CPP can only be used in a given module
+#
+# - flags:
+#   - {name: -w, within: []} # -w is allowed nowhere
+#
+- modules:
+  # If a certain module is imported qualified, it must be as the given name (e.g. Data.Text as T).
+  - {name: [Data.ByteString], as: BS}
+  - {name: [Data.CaseInsensitive], as: CI}
+  - {name: [Data.List], as: List}
+  - {name: [Data.Map], as: Map}
+  - {name: [Data.Set], as: Set}
+  - {name: [Data.Text.Encoding], as: TE}
+  - {name: [Data.Text], as: T}
+  - {name: [Database.Esqueleto], as: E}
+  - {name: [Yesod.Test], as: YT}
+  - {name: [Network.HTTP.Types.Status], as: Status}
+  - name: [Data.Currency]
+    within: [Model.Currency]
+    message: "Please import Model.Currency instead. We define an orphan instance for the `Alpha` type."
+  - name: [Data.UUID]
+    within: [Model.UUID]
+    message: "Please import Model.UUID instead. We define orphan instances for the type, and importing it through this module ensures that the instances are in scope where they need to be."
+  - name: [Ghci]
+    message: "The functions in the Ghci module are intended for use in the repl only."
+  - name: [Model.OrganizationRef]
+    within:
+      [ App
+      , Foundation.App.Internal
+      , Foundation.Authorization
+      , Foundation.Authorization.CardOnlyUsers # this has to be added so we can wrap up orgId into an OrganizationRef for the util functions
+      , Foundation.Authorization.Utils
+      , Handler.API.Mercury.Accounts
+      , Handler.API.Mercury.ApiTokens
+      , Handler.Admin.Brex
+      , Handler.Admin.Cards
+      , Handler.Admin.CloseOrganization
+      , Handler.Admin.Onboarding.About
+      , Handler.Admin.Onboarding.ApplicationReviewQueueSpec
+      , Handler.Admin.Onboarding.BeneficialOwnerGenerateShareLink
+      , Handler.Admin.Onboarding.BeneficialOwnerIdReuploadReceived
+      , Handler.Admin.Onboarding.BusinessDetailsRequest
+      , Handler.Admin.Onboarding.CreateRequest
+      , Handler.Admin.Onboarding.FlagBeneficialOwnerForIdReupload
+      , Handler.Admin.Onboarding.FlagOrganizationForDocReupload
+      , Handler.Admin.Onboarding.GetData
+      , Handler.Admin.Onboarding.MoveBack
+      , Handler.Admin.Onboarding.Purge
+      , Handler.Admin.Onboarding.Reject
+      , Handler.Admin.Onboarding.Reservation
+      , Handler.Admin.Onboarding.SetData
+      , Handler.Admin.Onboarding.Submit
+      , Handler.Admin.Onboarding.Submit.Document
+      , Handler.Admin.Organization
+      , Handler.Admin.OrganizationAccounts
+      , Handler.Admin.OrganizationLimits
+      , Handler.Admin.OrganizationSummary
+      , Handler.Admin.OrganizationToggleCurrencyCloud
+      , Handler.Admin.OrganizationToggleInternationalFundraiser
+      , Handler.Admin.OrganizationToggleTeaRoom
+      , Handler.Admin.OrganizationToggleTopTuna
+      , Handler.Admin.OrganizationTransactions
+      , Handler.Admin.OrganizationVelocityLimitErrors
+      , Handler.Admin.Statement
+      , Handler.Admin.Support
+      , Handler.Admin.Treasury.AccountInformation
+      , Handler.Admin.Treasury.Alerts
+      , Handler.Admin.Treasury.Letters
+      , Handler.Admin.Treasury.Onboarding
+      , Handler.Admin.Treasury.Onboarding.GetFormData
+      , Handler.Admin.Treasury.Onboarding.SetFormData
+      , Handler.Admin.Treasury.Portfolio
+      , Handler.Admin.Treasury.Proposals
+      , Handler.Admin.Treasury.Sketch
+      , Handler.Admin.UpdateAdminOnboardingNote
+      , Handler.Admin.User
+      , Handler.Authentication.Integration.Integrations
+      , Handler.Authentication.Integration.OAuth2ClientFlow
+      , Handler.Banking.AccountGraphData
+      , Handler.Banking.AddRecipient
+      , Handler.Banking.CreateCheckingAccount
+      , Handler.Banking.CreditCards
+      , Handler.Banking.DebitCards
+      , Handler.Banking.DebitCards.PushToWallet.Routes
+      , Handler.Banking.DeleteRecipient
+      , Handler.Banking.DismissFailedTransaction
+      , Handler.Banking.EditAccountNickname
+      , Handler.Banking.EditRecipient
+      , Handler.Banking.GetBankAccountTransactions
+      , Handler.Banking.GetOrganizationDashboardOverview
+      , Handler.Banking.GetPaymentCardTransactions
+      , Handler.Banking.GetPayments
+      , Handler.Banking.QuickbooksExport
+      , Handler.Banking.SearchTransactions
+      , Handler.Banking.SendMoney
+      , Handler.Banking.Statements.GetStatement
+      , Handler.Banking.Statements.ListStatements
+      , Handler.Banking.TransferMoney
+      , Handler.Banking.UnlinkAccount
+      , Handler.Banking.UpdateTransaction
+      , Handler.Banking.UpdateTransactionParty
+      , Handler.CurrencyCloud.V2.CurrencyConversion
+      , Handler.CurrencyCloud.V2.ForeignExchangeQuote
+      , Handler.Notifications
+      , Handler.Onboarding.About
+      , Handler.Onboarding.Application
+      , Handler.Onboarding.BeneficialOwner
+      , Handler.Onboarding.BeneficialOwner.Create
+      , Handler.Onboarding.BeneficialOwner.Delete
+      , Handler.Onboarding.BeneficialOwner.NonUser.Link
+      , Handler.Onboarding.BeneficialOwner.NonUser.Request
+      , Handler.Onboarding.BusinessDetailsRequest
+      , Handler.Onboarding.BusinessNames
+      , Handler.Onboarding.ConfirmAllowedIndustry
+      , Handler.Onboarding.ContactDetails
+      , Handler.Onboarding.EINVerification
+      , Handler.Onboarding.ExpectedServices
+      , Handler.Onboarding.FormationDetails
+      , Handler.Onboarding.GetData
+      , Handler.Onboarding.GetSummary
+      , Handler.Onboarding.IdentityVerificationRequest
+      , Handler.Onboarding.Investors
+      , Handler.Onboarding.GetRequest
+      , Handler.Onboarding.Purge.Organization
+      , Handler.Onboarding.Submit
+      , Handler.Perks
+      , Handler.Plaid.ExchangePublicToken
+      , Handler.Plaid.LinkEventLog
+      , Handler.PostOnboarding.AddFunds
+      , Handler.PostOnboarding.Address
+      , Handler.PostOnboarding.DebitCards
+      , Handler.PostOnboarding.GetPostOnboardingData
+      , Handler.PostOnboarding.SaveTeam
+      , Handler.PushNotifications.AddToken
+      , Handler.Settings.NotificationPreferences
+      , Handler.Settings.OrganizationDebitCardName
+      , Handler.Sweep
+      , Handler.Team.InvitedUsers.BeneficialOwnerData
+      , Handler.Team.Invites
+      , Handler.Team.RemoveUser
+      , Handler.Team.UpdatePermissions
+      , Handler.Treasury.Onboarding
+      , Handler.Treasury.Onboarding.BeneficialOwner
+      , Handler.Treasury.Treasury
+      , Handler.Uploads.BusinessNameDocument
+      , Handler.Uploads.CheckImage
+      , Handler.Uploads.ConvertImage
+      , Handler.Uploads.EinDocument
+      , Handler.Uploads.EntityFormation
+      , Handler.Uploads.Identification
+      , Mercury.HasOrganizationRef
+      , Mercury.Slack
+      , Mercury.Slack.Types
+      , Model.OrganizationRefSpec
+      , TestImport.Address
+      , TestImport.Onboarding
+      , TestImport.Organization
+      ]
+    message: "Please write all new handlers using OrganizationId. OrganizationRef is a compatibility type for phasing out Callsign-based routes. If you're adding compatibility code, whitelist your module in .hlint.yaml"
+  - name: [Network.HTTP.Client]
+    message: "Please import OpenTelemetry.Instrumentation.HttpClient instead so that requests may be properly traced."
+  - name: [Network.HTTP.Simple]
+    message: "Please import OpenTelemetry.Instrumentation.HttpClient.Simple instead so that requests may be properly traced."
+  - name: [UnliftIO.Async]
+    message: "Please the functions exported by Import.NoFoundation instead so that async tasks may be properly traced."
+  - name: PersistentModels.OnboardingOrganizationSanctionsCheck
+    within: [LoadAllModels, Mercury.Onboarding.Sanctions, Mercury.Onboarding.Sanctions.Sql, PersistentModels.OnboardingOrganizationSanctionsCheckApproval]
+    message: 'Internal db logic, use the functions exported by Mercury.Onboarding.Sanctions instead'
+  - name: PersistentModels.OnboardingOrganizationSanctionsCheckApproval
+    within: [LoadAllModels, Mercury.Onboarding.Sanctions, Mercury.Onboarding.Sanctions.Sql]
+    message: 'Internal db logic, use the functions exported by Mercury.Onboarding.Sanctions instead'
+  - name: PersistentModels.OnboardingKnownCustomerSanctionsCheck
+    within: [LoadAllModels, Mercury.Onboarding.Sanctions, Mercury.Onboarding.Sanctions.Sql, PersistentModels.OnboardingKnownCustomerSanctionsCheckApproval]
+    message: 'Internal db logic, use the functions exported by Mercury.Onboarding.Sanctions instead'
+  - name: PersistentModels.OnboardingKnownCustomerSanctionsCheckApproval
+    within: [LoadAllModels, Mercury.Onboarding.Sanctions, Mercury.Onboarding.Sanctions.Sql]
+    message: 'Internal db logic, use the functions exported by Mercury.Onboarding.Sanctions instead'
+
+  # Preludes
+  - name: [ClassyPrelude]
+    within:
+      - A.MercuryPrelude
+    message: "Instead of ClassyPrelude, please import A.MercuryPrelude for a default prelude."
+  - name: [ClassyPrelude.Yesod]
+    within:
+      - A.MercuryPrelude.Yesod
+    message: "Instead of ClassyPrelude.Yesod, please import A.MercuryPrelude.Yesod."
+
+  - name: [Control.Exception]
+    within: []
+    name: "Prefer `Control.Exception.Safe`, `UnliftIO.Exception`, or `Control.Exception.Annotated.UnliftIO`, depending"
+
+# In rare cases using these functions is acceptable, but they should be whitelisted here.
+- functions:
+  - name: unsafePerformIO
+    within:
+    - Mercury.ICalendar # unsafePerformIO is used to streamline FFI access in a safe way
+    - Mercury.ImageCashLetter # unsafePerformIO is used to streamline FFI access in a safe way
+    - TestImport.Utils
+    - TestImport.Utils.Debug
+  - {name: unsafeCoerce, within: []}
+  - {name: unsafeInterleaveIO, within: []}
+  - {name: unsafeInterleaveST, within: []}
+  - {name: unsafeIOToST, within: []}
+  - {name: unsafeIOToSTM, within: []}
+  - {name: unsafeFreeze, within: []}
+  - {name: unsafeThaw, within: []}
+  - {name: read, within: [Client.BBVA.V3.Account, Client.Lithic.Cli, Consumer.Jobs.GatherIpMetadataSpec, Handler.Admin.Onboarding.GetData.SqlSpec]} # Read is partial and gives a bad error message. Prefer readMay or a read function that gives a more detailed error message.
+  - {name: minimum, within: []}
+  - {name: maximum, within: []}
+  - {name: Data.List.nub, within: [], message: "nub is O(n^2). Use nubOrd instead (from Data.Containers.ListUtils, also re-exported from Import.NoFoundation)."}
+  - {name: Data.List.nubBy, within: [], message: "nubBy is O(n^2). Use nubOrdOn instead (from Data.Containers.ListUtils, also re-exported from Import.NoFoundation)."}
+  - {name: parseInsecureJsonBody}
+  - {name: requireInsecureJsonBody}
+  - name: makeDebugLogger
+    within:
+    - Application
+    - Ghci
+    - TestImport.Utils.Debug
+    message: "makeDebugLogger is only for debugging"
+  # partial functions
+  - {name: Data.List.minimum, within: []}
+  - {name: Data.List.maximum, within: []}
+  - {name: Data.List.minimumBy, within: []}
+  - {name: Data.List.maximumBy, within: []}
+  - {name: Data.Foldable.minimum, within: []}
+  - {name: Data.Foldable.maximum, within: []}
+  - {name: Data.Foldable.minimumBy, within: []}
+  - {name: Data.Foldable.maximumBy, within: []}
+  - {name: Data.Foldable.foldl1, within: []}
+  - {name: Data.Foldable.foldr1, within: []}
+  - {name: Data.List.head, within: []}
+  - {name: Data.List.last, within: []}
+  - {name: Data.List.init, within: []}
+  - {name: Data.List.tail, within: []}
+  - {name: Data.List.scanr1, within: []}
+
+  # Don't throwIO unless you really know what that you really really want it.
+  # Consider using throwExceptionalException instead so that we know where the error
+  # originated when it's reported to bugsnag.
+  #
+  # Ideally, throwIO would be handled using some sort of abstraction in these instances.
+  - name: UnliftIO.Exception.throwIO
+    within:
+      - Client
+      - Handler.Banking.AddRecipient
+      - Mercury.Yesod.Middleware.Bugsnag
+    message: "[UnliftIO.Exception] Prefer throwExceptionalException unless you plan on catching the thrown exception elsewhere"
+  - name: Control.Exception.throwIO
+    within:
+      - Client.DatabaseSpec # intentionally testing throwIO to ensure we have callstacks
+      - Mercury.Yesod.SendStatus # we need to use the regular throwIO here since Yesod doesn't handle AnnotatedException
+      - TestImport.Utils
+    message: "[Control.Exception] Prefer throwExceptionalException unless you plan on catching the thrown exception elsewhere"
+
+  # We want to use Control.Exception.Annotated.UnliftIO.catch instead of other
+  # catch functions, since it can actually deal with annotated exceptions
+  - name:
+      - ClassyPrelude.Yesod.catch
+      - UnliftIO.Exception.catch
+        # - Control.Exception.catch # we can't have this hint because it erroneously triggers??
+      - Control.Exception.Safe.catch
+      - Control.Exception.Annotated.catch # we want UnliftIO
+    within:
+      - Mercury.Yesod.Middleware.Bugsnag # need to remove annotations
+    message: "Prefer `Control.Exception.Annotated.UnliftIO.catch`"
+
+  - name:
+      - ClassyPrelude.Yesod.catches
+      - UnliftIO.Exception.catches
+      - Control.Exception.Safe.catches
+      - Control.Exception.Annotated.catches # we want UnliftIO
+    within:
+      - Import.NoFoundation # only temporarily until we get annotated-exception-0.2.0.1
+    message: "Prefer `Control.Exception.Annotated.UnliftIO.catches`"
+
+  - name:
+      - ClassyPrelude.Yesod.try
+      - UnliftIO.Exception.try
+      - Control.Exception.Safe.try
+      - Control.Exception.Annotated.try # we want UnliftIO
+    within: []
+    message: "Prefer `Control.Exception.Annotated.UnliftIO.try`"
+
+  - name:
+      - ClassyPrelude.Yesod.handle
+      - UnliftIO.Exception.handle
+      - Control.Exception.Safe.handle
+      - Control.Exception.Annotated.handle # we want UnliftIO
+    within: []
+    message: "Prefer `Control.Exception.Annotated.UnliftIO.handle`"
+
+  # monadLoggerFunctions (we want all logs going through
+  # MercuryLog, subject to our filters and formatting).
+  - {name: Control.Monad.Logger.logInfoN, within: [], message: "Use `log Info`."}
+  - {name: Control.Monad.Logger.logInfoNS, within: [], message: "Use `log Info`."}
+  - name: Control.Monad.Logger.monadLoggerLog
+    within:
+    - Logging.Log
+    - Logging.Types
+    - App
+    - Client
+    - TestImport.Instances
+    - Client.CurrencyCloud.V2.Credential.Types
+    - Mercury.Database.Monad
+    message: "Use `log` from the `MercuryLog` class."
+  - {name: Logging.Types.logWithContext, within: [Logging.Types, App, Client], message: "Use `log` from the `MercuryLog` class."}
+
+  # this won't work until we upgrade to hlint 3.2.1, which has the wildcard support
+  # rather than putting modules manually, let's just wait for that
+  # alas, it's awaiting an unmerged PR: https://github.com/ndmitchell/hlint/pull/1342
+  # - name: shamletFile
+  #   within: [Templates.**.*]
+  #   message: "Please create a `Templates` module for templates instead of inlining them directly. See the documentation in `Templates` and `Templates.Class`."
+
+  # Experiments functions.
+  - {name: Experiments.variantSelection, within: [ExperimentsSpec], message: "Use `chooseVariant` to branch in the backend."}
+
+  # Database Model Files
+  - name: mkPersist
+    within: []
+    message: "Use `PersistentModels.Import.mkModel` instead, as: mkModel $(discoverEntities) $(modelFile \"model_name\")"
+
+  - name: mkPersistWith
+    within: [PersistentModels.Import, ASA.PersistentModels.Import]
+    message: "Use `PersistentModels.Import.mkModel` instead, as: mkModel $(discoverEntities) $(modelFile \"model_name\"). (If writing an ASA model, use `mkAsaModel`.)"
+
+  - name: persistFileWith
+    within: [PersistentModels.Import, ASA.PersistentModels.Import]
+    message: "Use `PersistentModels.Import.modelFile instead. Note that you don't need to provide the full path, just the model name."
+
+  # TimeZone data
+  - name: includeTZFromDB
+    within: []
+    message: "Use `Data.Time.Zones.All.tzByLabel` instead, to avoid TH."
+
+# Add custom hints for this project
+# Use Mercury's version to get a nicely formatted JSON error
+- error: {lhs: requireCheckJsonBody, rhs: mercuryParseJSONBody}
+
+- error:
+    lhs: checkpoint
+    rhs: mercuryCheckpoint
+    note: "mercuryCheckpoint also adds a Bugsnag hook"
+
+- error:
+    lhs: reportExceptionWith id
+    rhs: reportException
+    note: "If you don't need to modify the exception, you can just use reportException"
+
+- error:
+    lhs: githubLink
+    rhs: srcLocGithubLink location
+    note: "We can avoid TemplateHaskell by using the CallStack-based variant instead."
+
+# getOrgByCallsign404 uses request-level caching, which we pretty much always want.
+- error: {lhs: getBy404 $ UniqueOrganizationCallsign callsign, rhs: getOrgByCallsign404 callsign}
+- error: {lhs: getBy404 (UniqueOrganizationCallsign callsign), rhs: getOrgByCallsign404 callsign}
+
+ # In SQL, NULL = NULL and NULL != NULL will both return NULL, which WHERE clauses treat as false
+- error: {lhs: v Database.Esqueleto.==. Database.Esqueleto.nothing, rhs: Database.Esqueleto.isNothing v, name: Use Esqueleto's isNothing}
+- error: {lhs: v Database.Esqueleto.==. Database.Esqueleto.val Nothing, rhs: Database.Esqueleto.isNothing v, name: Use Esqueleto's isNothing}
+- error: {lhs: v Database.Esqueleto.!=. Database.Esqueleto.nothing, rhs: not_ (Database.Esqueleto.isNothing v), name: Use Esqueleto's not isNothing}
+- error: {lhs: v Database.Esqueleto.!=. Database.Esqueleto.val Nothing, rhs: not_ (Database.Esqueleto.isNothing v), name: Use Esqueleto's not isNothing}
+
+- error: {lhs: getYesod, rhs: getApp, name: Prefer getApp—it's more generic and has a clearer name}
+- error: {lhs: getsYesod, rhs: getsApp, name: Prefer getsApp—it's more generic and has a clearer name}
+- error: {lhs: return, rhs: pure, name: Prefer pure}
+
+- error: {lhs: sendStatusJSON status204 (), rhs: sendResponseStatus status204 (), name: sendStatusJSON serializes () to an empty array which is invalid for 204 No Content}
+- error: {lhs: sendStatusJSON Network.HTTP.Types.Status.status204 (), rhs: sendResponseStatus Status.status204 (), name: sendStatusJSON serializes () to an empty array which is invalid for 204 No Content}
+
+
+
+# Turn on hints that are off by default
+#
+# Ban "module X(module X) where", to require a real export list
+# - warn: {name: Use explicit module export list}
+#
+# Replace a $ b $ c with a . b $ c
+# - group: {name: dollar, enabled: true}
+#
+# Generalise map to fmap, ++ to <>
+# - group: {name: generalise, enabled: true}
+
+
+# Ignore some builtin hints
+# - ignore: {name: Use let}
+# - ignore: {name: Use const, within: SpecialModule} # Only within certain modules
+
+
+# Define some custom infix operators
+# - fixity: infixr 3 ~^#^~
+
+
+# To generate a suitable file for HLint do:
+# $ hlint --default > .hlint.yaml
