@@ -1,32 +1,34 @@
 name: YesodAppCurriculum
 
 dependencies:
-  - base >= 4.7 && < 5
+  - base
 
 default-extensions:
-  - OverloadedStrings
   - DataKinds
+  - DeriveAnyClass
+  - DeriveGeneric
   - DerivingStrategies
   - FlexibleInstances
   - GADTs
   - GeneralisedNewtypeDeriving
   - MultiParamTypeClasses
+  - OverloadedStrings
+  - RecordWildCards
   - StandaloneDeriving
   - TypeFamilies
-  - RecordWildCards
-  - DeriveGeneric
-  - DeriveAnyClass
 
 library:
   source-dirs: library
   dependencies:
-    - yesod
-    - resource-pool
-    - persistent-sqlite
+    - aeson
     - monad-logger
     - persistent
+    - persistent-sqlite
+    - resource-pool
     - text
-    - aeson
+    - time
+    - yesod
+    - yesod-core
 
 executables:
   YesodAppCurriculum-exe:
