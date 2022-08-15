@@ -16,7 +16,6 @@ library
       Handler.User
       Model.User
       Orphans
-      Persistent.Auto
   other-modules:
       Paths_YesodAppCurriculum
   hs-source-dirs:

@@ -19,7 +19,7 @@ User sql=users
     dateOfBirth Day
     UniqueEmail email
     UniqueUsername username
-    createdAt UTCTime
+    createdAt UTCTime default=CURRENT_TIME MigrationOnly
 |]
 
 -- deriving newtype persist field

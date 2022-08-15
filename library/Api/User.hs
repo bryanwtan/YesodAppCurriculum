@@ -9,7 +9,6 @@ import Data.Time
 import Database.Persist
 import GHC.Generics
 import Model.User
-import Persistent.Auto
 
 -- database
 data ApiUser = ApiUser
@@ -45,19 +44,19 @@ toCreateUser RegisterUser {..} =
     { userEmail = email
     , userUsername = username
     , userDateOfBirth = dateOfBirth
-    , userCreatedAt = fakeUTCTime
     }
 
+-- outgoing
 data UserCreatedResponseData = UserCreatedResponseData
-  { message :: Text
-  , email :: Text
+  { responseMessage :: Text
+  , responseEmail :: Text
   }
 
 instance ToJSON UserCreatedResponseData where
   toJSON (UserCreatedResponseData m e) = object ["message" .= m, "email" .= e]
 
-newtype UserResponse = UserResponse {user :: UserCreatedResponseData}
+newtype UserCreatedResponse = UserCreatedResponse {user :: UserCreatedResponseData}
   deriving newtype (ToJSON)
 
-toUserResponse :: User -> UserResponse
-toUserResponse user = UserResponse $ UserCreatedResponseData "user created" (userEmail user)
+toUserCreatedResponse :: ApiUser -> UserCreatedResponse
+toUserCreatedResponse user = UserCreatedResponse $ UserCreatedResponseData "user created" (email (user :: ApiUser))
