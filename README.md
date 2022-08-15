@@ -1,7 +1,5 @@
 # YesodAppCurriculum
 
-Documenting everything
-
 ```
 stack new YesodAppCurriculum
 cd YesodAppCurriculum
@@ -13,12 +11,12 @@ fourmolu.yaml
 hlint.yaml
 ```
 
-Watch
+watch
 ```bash
 stack exec ghcid
 ```
 
-Run
+run
 ```bash
-stack run
+stack build && stack run
 ```
