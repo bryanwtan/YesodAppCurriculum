@@ -29,6 +29,9 @@ library:
     - time
     - yesod
     - yesod-core
+    - case-insensitive
+    - regex-tdfa
+    # - regex-tdfa-text
 
 executables:
   YesodAppCurriculum-exe:

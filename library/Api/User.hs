@@ -13,7 +13,7 @@ import Model.User
 -- database
 data ApiUser = ApiUser
   { id :: Key User
-  , email :: Text
+  , email :: Email
   , username :: Text
   , dateOfBirth :: Day
   }
@@ -31,7 +31,7 @@ toApiUser (Entity userId User {..}) =
 
 -- incoming
 data RegisterUser = RegisterUser
-  { email :: Text
+  { email :: Email
   , username :: Text
   , dateOfBirth :: Day
   }
@@ -49,7 +49,7 @@ toCreateUser RegisterUser {..} =
 -- outgoing
 data UserCreatedResponseData = UserCreatedResponseData
   { responseMessage :: Text
-  , responseEmail :: Text
+  , responseEmail :: Email
   }
 
 instance ToJSON UserCreatedResponseData where

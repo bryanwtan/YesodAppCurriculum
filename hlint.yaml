@@ -17,11 +17,22 @@
     - default: false
     - name:
         [
+          DataKinds,
+          DeriveAnyClass,
           DeriveDataTypeable,
           DeriveFunctor,
-          GeneralizedNewtypeDeriving,
+          DeriveGeneric,
+          DerivingStrategies,
+          FlexibleInstances,
+          GADTs,
+          GeneralisedNewtypeDeriving,
+          MultiParamTypeClasses,
           NoMonomorphismRestriction,
           OverloadedStrings,
+          QuasiQuotes,
+          RecordWildCards,
+          StandaloneDeriving,
+          TypeFamilies,
         ]
     - name:
         [

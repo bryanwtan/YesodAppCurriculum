@@ -36,9 +36,11 @@ library
   build-depends:
       aeson
     , base
+    , case-insensitive
     , monad-logger
     , persistent
     , persistent-sqlite
+    , regex-tdfa
     , resource-pool
     , text
     , time
