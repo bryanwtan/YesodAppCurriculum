@@ -10,7 +10,6 @@ import Database.Persist.TH
 import Model.Email
 import Yesod
 
--- Haskell types, but these map to real sql columns
 share
   [mkPersist sqlSettings, mkMigrate "migrateAll"]
   [persistLowerCase|

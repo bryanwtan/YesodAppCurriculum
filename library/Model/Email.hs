@@ -10,16 +10,6 @@ import Text.Regex.TDFA
 import Text.Regex.TDFA.Text ()
 import Yesod
 
--- https://www.w3.org/TR/html5/forms.html#valid-e-mail-address
-emailRegex :: Text
-emailRegex = "[a-zA-Z0-9+._-]+@[a-zA-Z-]+\\.[a-z]+"
-
-makeEmail :: Text -> Maybe Email
-makeEmail emailCandidate =
-  if emailCandidate =~ emailRegex
-    then Just (Email (CI.mk emailCandidate))
-    else Nothing
-
 newtype Email = Email {getCIText :: CI Text}
   deriving stock (Show)
 
@@ -41,3 +31,13 @@ instance PersistField Email where
 
 instance PersistFieldSql Email where
   sqlType _ = SqlOther "email"
+
+-- https://www.w3.org/TR/html5/forms.html#valid-e-mail-address
+emailRegex :: Text
+emailRegex = "[a-zA-Z0-9+._-]+@[a-zA-Z-]+\\.[a-z]+"
+
+makeEmail :: Text -> Maybe Email
+makeEmail emailCandidate =
+  if emailCandidate =~ emailRegex
+    then Just (Email (CI.mk emailCandidate))
+    else Nothing
