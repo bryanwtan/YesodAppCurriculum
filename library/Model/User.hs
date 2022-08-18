@@ -11,7 +11,7 @@ import Model.Email
 import Yesod
 
 share
-  [mkPersist sqlSettings, mkMigrate "migrateAll"]
+  [mkPersist sqlSettings]
   [persistLowerCase|
 User sql=users
   email Email

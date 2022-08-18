@@ -10,7 +10,7 @@ import Database.Persist.TH
 import Yesod
 
 share
-  [mkPersist sqlSettings, mkMigrate "migrateAll"]
+  [mkPersist sqlSettings]
   [persistLowerCase|
 Org sql=orgs
   orgName Text
