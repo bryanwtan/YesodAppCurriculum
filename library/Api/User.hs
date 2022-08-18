@@ -8,6 +8,7 @@ import Data.Text
 import Data.Time
 import Database.Persist
 import GHC.Generics
+import Model.Email
 import Model.User
 
 -- database
