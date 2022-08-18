@@ -17,10 +17,8 @@ library
       Handler.Org
       Handler.User
       Model.Email
+      Model.Monetization
       Model.Org
-      Model.Subscription.Offer
-      Model.Subscription.Plan
-      Model.Subscription.Price
       Model.User
       Model.UserRole
       Orphans

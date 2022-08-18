@@ -1,10 +1,6 @@
 module Model.UserRole where
 
 import Data.Text
-import Data.Time
-import Database.Persist.TH
-import Model.Email
-import Yesod
 
 data UserRole = Administrator | Customer | Locked
 
