@@ -10,12 +10,19 @@ build-type:     Simple
 
 library
   exposed-modules:
+      Api.Org
       Api.User
       Application
       Foundation
+      Handler.Org
       Handler.User
       Model.Email
+      Model.Org
+      Model.Subscription.Offer
+      Model.Subscription.Plan
+      Model.Subscription.Price
       Model.User
+      Model.UserRole
       Orphans
   other-modules:
       Paths_YesodAppCurriculum
@@ -34,6 +41,7 @@ library
       RecordWildCards
       StandaloneDeriving
       TypeFamilies
+      LambdaCase
   build-depends:
       aeson
     , base
@@ -68,6 +76,7 @@ executable YesodAppCurriculum-exe
       RecordWildCards
       StandaloneDeriving
       TypeFamilies
+      LambdaCase
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       YesodAppCurriculum
@@ -94,6 +103,7 @@ test-suite YesodAppCurriculum-test
       RecordWildCards
       StandaloneDeriving
       TypeFamilies
+      LambdaCase
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       YesodAppCurriculum

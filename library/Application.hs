@@ -8,6 +8,7 @@ module Application where
 import Control.Monad.Logger
 import Database.Persist.Sqlite
 import Foundation
+import Handler.Org
 import Handler.User
 import Model.User
 import Yesod

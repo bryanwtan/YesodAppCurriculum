@@ -16,6 +16,7 @@ default-extensions:
   - RecordWildCards
   - StandaloneDeriving
   - TypeFamilies
+  - LambdaCase
 
 library:
   source-dirs: library

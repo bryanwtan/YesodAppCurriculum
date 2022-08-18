@@ -8,6 +8,7 @@ module Foundation where
 import Data.Int
 import Data.Pool
 import Database.Persist.Sqlite
+import Model.Org
 import Model.User
 import Yesod
   ( RenderRoute (renderRoute),
@@ -34,6 +35,8 @@ mkYesodData
 /users/ UsersR GET
 
 /create/user/ RegisterUserR POST
+
+/create/org/ CreateOrgR POST
 |]
 
 instance Yesod Precursory
